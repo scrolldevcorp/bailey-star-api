@@ -1,0 +1,89 @@
+[
+  {
+    "code": "00003",
+    "reference": "6949116701",
+    "description": "FUNDA P/PEÑE REUTILIZABLE 00004 UND",
+    "stock": 209.00,
+    "wholesale_price_bs": 4.50,
+    "retail_price": 5.40,
+    "wholesale_price_usd": 2.80
+  },
+  {
+    "code": "0002254541",
+    "reference": "VB005",
+    "description": "VIBRADOR CONSOLA XBOX TRO-0005 UN",
+    "stock": 614.00,
+    "wholesale_price_bs": 4.80,
+    "retail_price": 5.80,
+    "wholesale_price_usd": 3.00
+  },
+  {
+    "code": "001442553635",
+    "reference": "001442553635",
+    "description": "LAMPARA CUADRADA 18W SF-SQ UND",
+    "stock": 25.00,
+    "wholesale_price_bs": 6.40,
+    "retail_price": 7.70,
+    "wholesale_price_usd": 4.00
+  },
+  {
+    "code": "0053",
+    "reference": "6923181704",
+    "description": "BALON VOLEIBOL N°5 MINSA SPORT 0053 UN",
+    "stock": 2.00,
+    "wholesale_price_bs": 7.20,
+    "retail_price": 8.70,
+    "wholesale_price_usd": 4.50
+  },
+  {
+    "reference": "CABLE-USB-C-001",
+    "description": "CABLE USB TIPO C 1 METRO ALTA VELOCIDAD",
+    "stock": 150.00,
+    "wholesale_price_bs": 3.50,
+    "retail_price": 4.50,
+    "wholesale_price_usd": 2.00
+  },
+  {
+    "code": "AUD-BT-500",
+    "reference": "AUD-BT-500",
+    "description": "AURICULARES BLUETOOTH 5.0 CON MICROFONO",
+    "stock": 75.00,
+    "wholesale_price_bs": 15.00,
+    "retail_price": 18.00,
+    "wholesale_price_usd": 9.00
+  },
+  {
+    "reference": "MOUSE-GAMING-RGB",
+    "description": "MOUSE GAMING RGB 7 BOTONES PROGRAMABLES",
+    "stock": 45.00,
+    "wholesale_price_bs": 12.00,
+    "retail_price": 15.00,
+    "wholesale_price_usd": 7.50
+  },
+  {
+    "code": "KB-MEC-001",
+    "reference": "TECLADO-MECANICO-RGB",
+    "description": "TECLADO MECANICO RGB SWITCHES AZULES",
+    "stock": 30.00,
+    "wholesale_price_bs": 35.00,
+    "retail_price": 42.00,
+    "wholesale_price_usd": 22.00
+  },
+  {
+    "reference": "WEBCAM-HD-1080P",
+    "description": "CAMARA WEB HD 1080P CON MICROFONO INTEGRADO",
+    "stock": 20.00,
+    "wholesale_price_bs": 25.00,
+    "retail_price": 30.00,
+    "wholesale_price_usd": 15.00
+  },
+  {
+    "code": "HUB-USB-4P",
+    "reference": "HUB-USB-4P",
+    "description": "HUB USB 3.0 4 PUERTOS CON LED INDICADOR",
+    "stock": 60.00,
+    "wholesale_price_bs": 8.00,
+    "retail_price": 10.00,
+    "wholesale_price_usd": 5.00
+  }
+]

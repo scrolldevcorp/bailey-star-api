@@ -1,0 +1,143 @@
+{
+  "client": "Thunder Client",
+  "collectionName": "Bailey Star API",
+  "dateExported": "2024-11-10",
+  "version": "1.2",
+  "folders": [
+    {
+      "name": "Products",
+      "requests": [
+        {
+          "name": "Create Product (with code)",
+          "method": "POST",
+          "url": "http://localhost:3000/api/products",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"code\": \"00003\",\n  \"reference\": \"6949116701\",\n  \"description\": \"FUNDA P/PEÑE REUTILIZABLE 00004 UND\",\n  \"stock\": 209.00,\n  \"wholesale_price_bs\": 4.50,\n  \"retail_price\": 5.40,\n  \"wholesale_price_usd\": 2.80\n}"
+          }
+        },
+        {
+          "name": "Create Product (without code)",
+          "method": "POST",
+          "url": "http://localhost:3000/api/products",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"reference\": \"VB005\",\n  \"description\": \"VIBRADOR CONSOLA XBOX TRO-0005 UN\",\n  \"stock\": 614.00,\n  \"wholesale_price_bs\": 4.80,\n  \"retail_price\": 5.80,\n  \"wholesale_price_usd\": 3.00\n}"
+          }
+        },
+        {
+          "name": "Get All Products",
+          "method": "GET",
+          "url": "http://localhost:3000/api/products?page=1&limit=10"
+        },
+        {
+          "name": "Get Product by Reference",
+          "method": "GET",
+          "url": "http://localhost:3000/api/products/by-identifier?reference=VB005"
+        },
+        {
+          "name": "Get Product by Code",
+          "method": "GET",
+          "url": "http://localhost:3000/api/products/by-identifier?code=00003"
+        },
+        {
+          "name": "Get Product by ID",
+          "method": "GET",
+          "url": "http://localhost:3000/api/products/1"
+        },
+        {
+          "name": "Search Products by Description",
+          "method": "GET",
+          "url": "http://localhost:3000/api/products?description=FUNDA&page=1&limit=10"
+        },
+        {
+          "name": "Get Low Stock Products",
+          "method": "GET",
+          "url": "http://localhost:3000/api/products?maxStock=50"
+        },
+        {
+          "name": "Update Product Stock",
+          "method": "PATCH",
+          "url": "http://localhost:3000/api/products?reference=VB005",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"stock\": 500.00\n}"
+          }
+        },
+        {
+          "name": "Update Product Prices",
+          "method": "PATCH",
+          "url": "http://localhost:3000/api/products?code=00003",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"wholesale_price_bs\": 5.00,\n  \"retail_price\": 6.00,\n  \"wholesale_price_usd\": 3.20\n}"
+          }
+        },
+        {
+          "name": "Update Product Description",
+          "method": "PATCH",
+          "url": "http://localhost:3000/api/products?reference=6949116701",
+          "headers": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "type": "json",
+            "raw": "{\n  \"description\": \"FUNDA P/PEÑE REUTILIZABLE 00004 UND - ACTUALIZADO\"\n}"
+          }
+        },
+        {
+          "name": "Delete Product by Reference",
+          "method": "DELETE",
+          "url": "http://localhost:3000/api/products?reference=VB005"
+        },
+        {
+          "name": "Delete Product by Code",
+          "method": "DELETE",
+          "url": "http://localhost:3000/api/products?code=00003"
+        }
+      ]
+    },
+    {
+      "name": "Health & Info",
+      "requests": [
+        {
+          "name": "Health Check",
+          "method": "GET",
+          "url": "http://localhost:3000/api/health"
+        },
+        {
+          "name": "API Info",
+          "method": "GET",
+          "url": "http://localhost:3000/"
+        }
+      ]
+    }
+  ]
+}

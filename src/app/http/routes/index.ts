@@ -5,7 +5,6 @@ import Database from '../../../infrastructure/db/database';
 import { ProductRepository } from '../../../infrastructure/repositories/postgress-product.repository';
 import { ProductService } from '../../../domain/services/product.service';
 import { ProductController } from '../controllers/product.controller';
-import { createChatRoutes } from './chat.routes';
 
 /**
  * Configurar todas las rutas de la aplicación
@@ -24,7 +23,6 @@ export const createRoutes = (): Router => {
 
   // Montar rutas de productos
   router.use('/products', createProductRoutes(productController));
-  router.use('/chat', createChatRoutes());
 
   // Ruta de health check
   router.get('/health', (req, res) => {

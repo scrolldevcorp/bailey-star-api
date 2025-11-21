@@ -1,4 +1,6 @@
-import { Product } from "../../../domain/entities/product.entity";
+import { FetchHttpAdapter } from "../../core/config/http-client";
+import { Product } from "../../domain/entities/product.entity";
+import { DolarApiService } from "../../infrastructure/services/dolar-api.service";
 
 interface FormattedProductPriceInfo {
   wholesaleBs?: number | null;
@@ -19,12 +21,14 @@ interface SearchProductItem {
   updatedAt?: Date;
 }
 
-export function formatProductSearchResults(products: Product[] | SearchProductItem[], maxItems: number = 5): string {
+export async function formatProductSearchResults(products: Product[] | SearchProductItem[], maxItems: number = 5, priceModes: string[]): Promise<string> {
+  const httpClient = new FetchHttpAdapter()
+  const dolarApi = new DolarApiService(httpClient)
+  const oficialRate = await dolarApi.getOfficialRate()
   if (!products || products.length === 0) {
     return "No se encontraron productos para mostrar.";
   }
   const limited = products.slice(0, maxItems);
-  console.log(JSON.stringify(products, null, 2))
   const lines = limited.map((p, index) => {
     const anyProduct = p as any;
 
@@ -40,13 +44,13 @@ export function formatProductSearchResults(products: Product[] | SearchProductIt
 
     const priceParts: string[] = [];
 
-    if (prices.retail != null) {
+    if (prices.retail != null && priceModes.includes('usdRetail')) {
       priceParts.push(`detalle: $${prices.retail.toFixed(2)}`);
     }
-    if (prices.wholesaleBs != null) {
-      priceParts.push(`mayor: ${prices.wholesaleBs.toFixed(2)} Bs`);
+    if (prices.wholesaleBs != null && priceModes.includes('wholesaleBolivares')) {
+      priceParts.push(`mayor: Bs. ${(oficialRate.promedio*prices.wholesaleBs).toFixed(2)}`);
     }
-    if (prices.wholesaleUsd != null) {
+    if (prices.wholesaleUsd != null && priceModes.includes('wholesaleUsd')) {
       priceParts.push(`mayor: $${prices.wholesaleUsd.toFixed(2)}`);
     }
 

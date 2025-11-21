@@ -1,16 +1,19 @@
 import { z } from "zod";
-import { McpTool } from "../../types/mcp-tool.types";
-import { EmailService } from "../../services/email.service";
+import { McpTool } from "./mcp-tool.types";
 import { saleEmailTemplate } from "../utils/email-template.util";
+import { EmailService } from "../../infrastructure/services/email.service";
 
 export const sendSaleEmailTool: McpTool = {
   name: "sendSaleEmail",
   description: "Sends a sale confirmation email including product details and total price",
-  parameters: z.object({
+  annotations: {
+    title: "Send sale email",
+    readOnlyHint: true
+  },
+  parameters: {
     phone: z.string().describe("Customer phone number"),
     products: z.array(
       z.object({
-        id: z.string(),
         code: z.string().nullable(),
         reference: z.string().nullable(),
         description: z.string().nullable(),
@@ -18,12 +21,9 @@ export const sendSaleEmailTool: McpTool = {
         wholesale_price_bs: z.number().nullable().optional(),
         retail_price: z.number().nullable().optional(),
         wholesale_price_usd: z.number().nullable().optional(),
-        createdAt: z.date().optional(),
-        updatedAt: z.date().optional(),
       })
     ).describe("List of purchased products with prices")
-  }),
-
+  },
   execute: async (args: any, extra?: any) => {
     const { logger } = extra || {};
     
@@ -43,23 +43,23 @@ export const sendSaleEmailTool: McpTool = {
 
       // Generar HTML
       const html = saleEmailTemplate({
-        customerEmail: 'keving28km@gmail.com',
+        customerEmail: '',
         phone,
         products,
-        total
       });
 
       // Enviar correo
       await emailService.sendEmail({
-        to: 'keving28km@gmail.com',
-        subject: "Confirmación de tu compra",
+        to: 'baileystarig@gmail.com',
+        subject: "Solicitud de compra",
         html
       });
 
       return {
-        success: true,
-        message: "Correo de venta enviado correctamente",
-        total
+        content: [{
+          type: "text",
+          text: "Un agente de turno se contactara contigo en la brevedad posible para concretar la solicitud."
+        }]
       };
 
     } catch (error) {

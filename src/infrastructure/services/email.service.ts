@@ -5,7 +5,9 @@ export class EmailService {
 
   constructor() {
     this.transporter = nodemailer.createTransport({
-      service: "gmail",
+      host: 'mail.privateemail.com',
+      port: 465,
+      secure: true,
       auth: {
         user: process.env.SMTP_USER,       // correo Gmail
         pass: process.env.SMTP_PASSWORD,   // app password
@@ -15,7 +17,7 @@ export class EmailService {
 
   async sendEmail({ to, subject, html }: { to: string; subject: string; html: string; }) {
     await this.transporter.sendMail({
-      from: `"Tu tienda" <${process.env.SMTP_USER}>`,
+      from: `"Bailey Star" <${process.env.SMTP_USER}>`,
       to,
       subject,
       html,

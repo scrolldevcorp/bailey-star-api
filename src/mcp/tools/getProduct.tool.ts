@@ -1,16 +1,21 @@
 import { z } from "zod";
-import Database from "../../../infrastructure/db/database";
-import { ProductRepository } from "../../../infrastructure/repositories/postgress-product.repository";
-import { ProductService } from "../../../domain/services/product.service";
-import { McpTool } from "../../types/mcp-tool.types";
+import Database from "../../infrastructure/db/database";
+import { ProductRepository } from "../../infrastructure/repositories/postgress-product.repository";
+import { ProductService } from "../../domain/services/product.service";
+import { McpTool } from "./mcp-tool.types";
+import { encode } from "@toon-format/toon";
 
 export const getProductTool: McpTool = {
   name: "getProduct",
   description: "Gets detailed information about a specific product by its code or reference number",
-  parameters: z.object({
+  annotations: {
+    title: "Get product by code or reference",
+    readOnlyHint: true
+  },
+  parameters: {
     code: z.string().optional().describe("Product code to search for"),
     reference: z.string().optional().describe("Product reference number to search for"),
-  }),
+  },
   execute: async (args: { code?: string; reference?: string }, extra?: any) => {
     const { logger } = extra || {};
     
@@ -38,28 +43,18 @@ export const getProductTool: McpTool = {
       const product = await productService.getProductByIdentifier(identifier);
 
       return {
-        success: true,
-        product: {
-          id: product.id,
-          code: product.code,
-          reference: product.reference,
-          description: product.description,
-          stock: product.stock,
-          prices: {
-            wholesaleBs: product.wholesale_price_bs,
-            retail: product.retail_price,
-            wholesaleUsd: product.wholesale_price_usd
-          },
-          createdAt: product.created_at,
-          updatedAt: product.updated_at
-        }
+        content: [{
+          type: "text",
+          text: encode(product)
+        }]
       };
-
     } catch (error) {
       logger?.error('❌ Error obteniendo producto:', error);
       return {
-        success: false,
-        error: error instanceof Error ? error.message : 'Producto no encontrado'
+        content: [{
+          type: "error",
+          text: `Error obteniendo producto: ${error instanceof Error ? error.message : 'Error desconocido al obtener producto'}`
+        }]
       };
     }
   }

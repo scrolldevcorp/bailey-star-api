@@ -25,7 +25,7 @@ export const createRoutes = (): Router => {
   router.use('/products', createProductRoutes(productController));
 
   // Ruta de health check
-  router.get('/health', (req, res) => {
+  router.get('/health', (_req, res) => {
     res.json({
       success: true,
       data: {

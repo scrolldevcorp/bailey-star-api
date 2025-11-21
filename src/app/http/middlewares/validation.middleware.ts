@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { validationResult, ValidationError as ExpressValidationError } from 'express-validator';
+import { validationResult } from 'express-validator';
 import { ResponseBuilder } from '../../../core/utils/response-builder';
 import { ErrorCodes } from '../../../core/constants/error-codes';
 

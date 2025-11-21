@@ -1,11 +1,10 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
-import { ProductService } from '../domain/services/product.service';
 import { getProductTool } from './tools/getProduct.tool';
 import { searchProductsTool } from './tools/searchProducts.tool';
 import { sendSaleEmailTool } from './tools/sendEmail.tool';
 
 
-export function createMcpServer(productService: ProductService) {
+export function createMcpServer() {
   console.log('🚀 Inicializando MCP Server...');
   const mcpServer = new McpServer({
     name: "Flight Tools API",

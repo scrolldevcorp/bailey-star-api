@@ -3,12 +3,11 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { createRoutes } from './app/http/routes';
 import { errorHandler } from './app/http/middlewares/error-handler.middleware';
-import { Pool, QueryResult } from 'pg';
+// import { Pool } from 'pg';
 
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
 import { createMcpServer } from './mcp/mcpServer';
-import { ProductService } from './domain/services/product.service';
-import { ProductRepository } from './infrastructure/repositories/postgress-product.repository';
+
 /**
  * Crear y configurar la aplicación Express
  */
@@ -22,18 +21,20 @@ export const createApp = (): Application => {
   app.use(express.urlencoded({ extended: true }));
 
   // Logging de requests en desarrollo
-  if (process.env.NODE_ENV === 'development') {
-    app.use((req, res, next) => {
-      console.log(`${req.method} ${req.path}`);
-      next();
+ if (process.env.NODE_ENV === 'development') {
+    // Usamos _res para indicar que el parámetro 'res' es obligatorio
+    // por la firma de Express, pero será ignorado en este middleware.
+    app.use((req, _res, next) => {
+        console.log(`${req.method} ${req.path}`);
+        next();
     });
-  }
+}
 
   // Montar rutas
   app.use('/api', createRoutes());
 
   // Ruta raíz
-  app.get('/', (req, res) => {
+  app.get('/', (_req, res) => {
     res.json({
       success: true,
       data: {
@@ -47,16 +48,16 @@ export const createApp = (): Application => {
     });
   });
 
-  const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_NAME,
-    password: process.env.DB_PASSWORD,
-    port: Number(process.env.DB_PORT),
-  });
+  // const pool = new Pool({
+  //   user: process.env.DB_USER,
+  //   host: process.env.DB_HOST,
+  //   database: process.env.DB_NAME,
+  //   password: process.env.DB_PASSWORD,
+  //   port: Number(process.env.DB_PORT),
+  // });
 
-  const productService = new ProductService(new ProductRepository(pool))
-  const { mcpServer, tools } = createMcpServer(productService);
+  // const productService = new ProductService(new ProductRepository(pool))
+  const { mcpServer } = createMcpServer();
 
   app.post('/mcp', async (req: Request, res: Response) => {
   // In stateless mode, create a new instance of transport and server for each request
@@ -91,7 +92,7 @@ export const createApp = (): Application => {
 });
 
 // SSE notifications not supported in stateless mode
-app.get('/mcp', async (req: Request, res: Response) => {
+app.get('/mcp', async (_req: Request, res: Response) => {
   console.log('Received GET MCP request');
   res.writeHead(405).end(JSON.stringify({
     jsonrpc: "2.0",
@@ -104,7 +105,7 @@ app.get('/mcp', async (req: Request, res: Response) => {
 });
 
 // Session termination not needed in stateless mode
-app.delete('/mcp', async (req: Request, res: Response) => {
+app.delete('/mcp', async (_req: Request, res: Response) => {
   console.log('Received DELETE MCP request');
   res.writeHead(405).end(JSON.stringify({
     jsonrpc: "2.0",
